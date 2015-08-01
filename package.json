@@ -1,0 +1,28 @@
+{
+  "name": "ibox",
+  "version": "1.0.0",
+  "description": "simulator of the storefront smartbox & analytics platform",
+  "main": "server_ibox.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pastrop/iBox"
+  },
+  "keywords": [
+    "Express",
+    "MongoDB"
+  ],
+  "author": "Alex Smirnoff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pastrop/iBox/issues"
+  },
+  "homepage": "https://github.com/pastrop/iBox",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.2",
+    "mongoose": "^4.1.0"
+  }
+}
