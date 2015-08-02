@@ -1,5 +1,5 @@
 var Item = require('../models/item');
-
+//Production Functionality Placeholder
 exports.save = function(name, producer, vintage, callback, errback) {
     var search=name;
     var result;
@@ -31,18 +31,24 @@ exports.save = function(name, producer, vintage, callback, errback) {
 // Simulator functionality, loading the DB
 exports.bulk = function(name, producer, vintage, callback, errback) {
     var arrayofItems=[];
-    var product={};
-    var pickups = Math.floor((Math.random() * 10) + 1); 
-    console.log('number of pickups: '+pickups)
-    product.name = name;
-    product.producer = producer;
-    product.vintage = vintage;
-           
-    for (i=0;i<pickups;i++){
-      arrayofItems.push(product)  
+    var activeStores=[];
+    var count = 0;
+    for (j=0;j<5;j++){
+      var id= Math.floor((Math.random() * 5) + 1); //Active stores ID 
+      activeStores.push(id);  
+    };
+    console.log('activeStores: '+activeStores);
+
+    
+    for(j=0; j<activeStores.length; j++){      
+        var pickups = Math.floor((Math.random() * 10) + 1); //number of Item pickups in a given store    
+        for (i=count;i<pickups+count;i++){          
+          arrayofItems.push({name: name, producer: producer, vintage: vintage, storeID: activeStores[j]});  
+          console.log('i: '+i+'item: '+arrayofItems[i].name+' '+arrayofItems[i].producer+' '+arrayofItems[i].storeID);  
+        };   
+        count=count+pickups;
     };
 
-    console.log(arrayofItems);
 
     function onBulkInsert(err, items) {
      if (err) {
