@@ -62,3 +62,16 @@ exports.bulk = function(name, producer, vintage, callback, errback) {
     Item.create(arrayofItems, onBulkInsert);
    callback('stuff happened'); 
 };
+
+//Analytics Handle
+exports.list = function(name, producer, vintage, storeID, callback, errback) {
+    console.log("Analytics section entry "+storeID);
+    Item.find({storeID: storeID},function(err, items) {
+        if (err) {
+            errback(err);
+            return;
+        }
+//        console.log(items);
+        callback(items);
+    });
+};
