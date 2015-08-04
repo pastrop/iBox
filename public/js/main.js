@@ -162,7 +162,7 @@ $("#knopka_6").on('click', function(event) {
 $("#analyticsForm").on('submit', function(event) {
     event.preventDefault(); 
     var ID_ = $('#ID').val();
-    console.log('var ID_: ',ID_);
+//    console.log('var ID_: ',ID_);
     // Only StoreID is currently used for the Analytics, the rest is placeholders
     var name_ = 'tinto roriz';
     var producer_ = 'santa fe';
@@ -183,48 +183,74 @@ $("#analyticsForm").on('submit', function(event) {
     })
     .done(function(items){
       var totalcount=items.length;
-      var pr_1=0;
-      var pr_2=0;
-      var pr_3=0;
-      var pr_4=0;
-      var pr_5=0;
-      var pr_6=0;
-      for(i=0; i<totalcount; i++){
+      var pr_1=[];
+      var pr_2=[];
+      var pr_3=[];
+      var pr_4=[];
+      var pr_5=[];
+      var pr_6=[];
+      for (j=0; j<30; j++){
+        pr_1[j]=pr_2[j]=pr_3[j]=pr_4[j]=pr_5[j]=pr_6[j]=0;
+//        var day = Math.floor((Math.random() * 29) + 1);
+//        console.log('random day: '+day);
+      };
+       for(i=0; i<totalcount; i++){
         //Jerry-rigged code to be refactored
-        if(items[i].name == 'Rioja'){pr_1++};
-        if(items[i].name == 'tinto roriz'){pr_2++};
-        if(items[i].name == 'Chablis'){pr_3++};
-        if(items[i].name == 'Rose'){pr_4++};
-        if(items[i].name == 'Chardonnay'){pr_5++};
-        if(items[i].name == 'Pinot Gris'){pr_6++};
-      };  
+        var day = Math.floor((Math.random() * 30));
+        if(items[i].name == 'Rioja'){pr_1[day]++};
+        if(items[i].name == 'tinto roriz'){pr_2[day]++};
+        if(items[i].name == 'Chablis'){pr_3[day]++};
+        if(items[i].name == 'Rose'){pr_4[day]++};
+        if(items[i].name == 'Chardonnay'){pr_5[day]++};
+        if(items[i].name == 'Pinot Gris'){pr_6[day]++};
+       };  
+
       console.log(JSON.stringify(items));
-      console.log('total count: '+totalcount+' pr_1: '+pr_1);
+     console.log('total count: '+totalcount+' pr_1: '+pr_1);
+     console.log('total count: '+totalcount+' pr_2: '+pr_2);
+     console.log('total count: '+totalcount+' pr_3: '+pr_3);
+     console.log('total count: '+totalcount+' pr_4: '+pr_4);
+     console.log('total count: '+totalcount+' pr_5: '+pr_5);
+     console.log('total count: '+totalcount+' pr_6: '+pr_6);
 //Analytics Graphics
 
 var chartData={
   "type": "bar",
-   "scale-x":{
-            "values": ["Rioja", "Tinto Roriz", "Chablis", "Rose", "Chardonnay", "Pinot Gris"]
-    },
+    "legend":{  
+  },
+//   "scale-x":{
+//            "values": ["Rioja", "Tinto Roriz", "Chablis", "Rose", "Chardonnay", "Pinot Gris"]
+//    },
   "series": [
-     {"values": [0, 0, 0, 0, 0, 0]} 
-//    { "values": [28, 57, 43, 56] }
+     {"values":  [0, 0, 0, 0, 0, 0],
+       "text": "Rioja" }, 
+     { "values": [2, 5, 4, 5, 1, 2],
+        "text": "Tinto Roriz" },
+     { "values": [8, 7, 3, 6, 2, 1],
+        "text": "Chablis" },
+     { "values": [2, 3, 1, 2, 4, 3],
+        "text": "Rose" },
+     { "values": [1, 3, 5, 6, 5, 1],
+       "text": "Chardonnay" },
+     { "values": [0, 3, 2, 5, 4, 4],
+        "text": "Pinot Gris" }
   ]
 };
 //Jerry-rigged code to be refactored
-chartData.series[0].values[0]=pr_1;
-chartData.series[0].values[1]=pr_2;
-chartData.series[0].values[2]=pr_3;
-chartData.series[0].values[3]=pr_4;
-chartData.series[0].values[4]=pr_5;
-chartData.series[0].values[5]=pr_6;
-console.log('checking chartData: '+chartData.series[0].values[0]);
+for(i=0; i<30; i++){
+chartData.series[0].values[i]=pr_1[i];
+chartData.series[1].values[i]=pr_2[i];
+chartData.series[2].values[i]=pr_3[i];
+chartData.series[3].values[i]=pr_4[i];
+chartData.series[4].values[i]=pr_5[i];
+chartData.series[5].values[i]=pr_6[i];
+};
+//console.log('checking chartData: '+chartData.series[0].values[0]);
 //window.onload=function(){
   zingchart.render({
     id:'chartDiv',
-    height:400,
-    width:1200,
+    height:500,
+    width:1100,
     data:chartData
   });
 //};

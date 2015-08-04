@@ -4,7 +4,7 @@ var router = express.Router();
 
 //Analytics Handle
 router.post('/items_analytics', function(req, res) {
-    console.log("Analytics Handle in routes.js: "+ req.body.storeID);
+//    console.log("Analytics Handle in routes.js: "+ req.body.storeID);
     Item.list(req.body.name, req.body.producer, req.body.vintage, req.body.storeID, function(items) {        
         res.json(items);       
     }, function(err) {

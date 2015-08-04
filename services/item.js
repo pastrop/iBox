@@ -33,22 +33,22 @@ exports.bulk = function(name, producer, vintage, callback, errback) {
     var arrayofItems=[];
     var activeStores=[];
     var count = 0;
-    for (j=0;j<5;j++){
-      var id= Math.floor((Math.random() * 5) + 1); //Active stores ID 
+    for (j=0;j<300;j++){ //Looping through a total number of stores
+      var id= Math.floor((Math.random() * 300) + 1); //Active stores ID 
       activeStores.push(id);  
     };
-    console.log('activeStores: '+activeStores);
+    console.log('Item.js-services printout: activeStores: '+activeStores);
 
     
     for(j=0; j<activeStores.length; j++){      
-        var pickups = Math.floor((Math.random() * 10) + 1); //number of Item pickups in a given store    
+        var pickups = Math.floor((Math.random() * 5) + 1); //number of Item pickups in a given store    
         for (i=count;i<pickups+count;i++){          
           arrayofItems.push({name: name, producer: producer, vintage: vintage, storeID: activeStores[j]});  
-          console.log('i: '+i+'item: '+arrayofItems[i].name+' '+arrayofItems[i].producer+' '+arrayofItems[i].storeID);  
+//          console.log('i: '+i+'item: '+arrayofItems[i].name+' '+arrayofItems[i].producer+' '+arrayofItems[i].storeID);  
         };   
         count=count+pickups;
     };
-
+    console.log("# of Docs to insert: "+count)
 
     function onBulkInsert(err, items) {
      if (err) {
@@ -65,7 +65,7 @@ exports.bulk = function(name, producer, vintage, callback, errback) {
 
 //Analytics Handle
 exports.list = function(name, producer, vintage, storeID, callback, errback) {
-    console.log("Analytics section entry "+storeID);
+//    console.log("Analytics section entry "+storeID);
     Item.find({storeID: storeID},function(err, items) {
         if (err) {
             errback(err);
