@@ -3,6 +3,7 @@ var Item = require('../services/item');
 var router = express.Router();
 
 //Analytics Handle
+//Individual store related
 router.post('/items_analytics', function(req, res) {
 //    console.log("Analytics Handle in routes.js: "+ req.body.storeID);
     Item.list(req.body.name, req.body.producer, req.body.vintage, req.body.storeID, function(items) {        
@@ -11,8 +12,18 @@ router.post('/items_analytics', function(req, res) {
         res.status(400).json(err);
     });
 });
+//Entire datastore
+router.get('/items_analytics', function(req, res) {
+    Item.fetch(function(items) {
+        res.json(items);
+        console.log('fetch function in routes');
+    }, function(err) {
+        res.status(400).json(err);
+    });
+});
 
 
+//Database loading handle
 router.post('/items', function(req, res) {
 
 /*    Item.listone(req.body.name, function(item) {

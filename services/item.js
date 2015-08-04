@@ -75,3 +75,14 @@ exports.list = function(name, producer, vintage, storeID, callback, errback) {
         callback(items);
     });
 };
+
+exports.fetch = function(callback, errback) {
+    Item.find(function(err, items) {
+        if (err) {
+            errback(err);
+            return;
+        }
+        console.log('fetch function in Service');
+        callback(items);
+    });
+};
