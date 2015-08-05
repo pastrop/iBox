@@ -23,7 +23,7 @@ $("#knopka_1").on('click', function(event) {
     .done(function(items){
       console.log(JSON.stringify(items));
   })
-    .error(function(){console.log('doesnt fucking work!')});
+    .error(function(){console.log('doesnt $%#%*& work!')});
 }); 
 //End of the AJAX call code block
 
@@ -183,6 +183,7 @@ $("#analyticsForm").on('submit', function(event) {
     })
     .done(function(items){
       var totalcount=items.length;
+      console.log ('totalcount-selected store: '+totalcount);
       var pr_1=[];
       var pr_2=[];
       var pr_3=[];
@@ -249,6 +250,7 @@ $("#analyticsForm").on('submit', function(event) {
 //1st Chart for a selected Store
 var chartData={
   "type": "bar",
+  "title":{"text":"30 Days Performance for Selected Store"},
     "legend":{  
   },
 //   "scale-x":{
@@ -281,6 +283,7 @@ chartData.series[5].values[i]=pr_6[i];
 //2nd Chart for a selected Store
 var chartData2={
   "type": "line",
+  "title":{"text":"Hourly Performance For Selected Store"},
   "scale-x":{
             "values": ["10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm","10pm"]
     },
@@ -354,7 +357,7 @@ $("#knopka_2_1").on('click', function(event) {
                 'producer': producer_,
                 'vintage' : vintage_};*/
 
-    $.ajax('/items_analytics', { //AJAX call code block
+    $.ajax('/items_analytics', { //AJAX call code block GET request for ALL Stores
         type: 'GET',
 //        data: JSON.stringify(item),
 //        dataType: 'json',
@@ -362,6 +365,76 @@ $("#knopka_2_1").on('click', function(event) {
     })
     .done(function(items){
       console.log("got the items!");
+      //Building Analytics for all stores
+      var totalcount=items.length;
+      console.log ('totalcount-all stores: '+totalcount);
+      var pr_1=[];
+      var pr_2=[];
+      var pr_3=[];
+      var pr_4=[];
+      var pr_5=[];
+      var pr_6=[];
+      for (j=0; j<30; j++){  //setting counters for products
+        pr_1[j]=pr_2[j]=pr_3[j]=pr_4[j]=pr_5[j]=pr_6[j]=0;
+      };
+
+       for(i=0; i<totalcount; i++){ //Calculating pickups per product per day for a given store
+        //Jerry-rigged code to be refactored
+        var day = Math.floor((Math.random() * 30));
+        if(items[i].name == 'Rioja'){pr_1[day]++};
+        if(items[i].name == 'tinto roriz'){pr_2[day]++};
+        if(items[i].name == 'Chablis'){pr_3[day]++};
+        if(items[i].name == 'Rose'){pr_4[day]++};
+        if(items[i].name == 'Chardonnay'){pr_5[day]++};
+        if(items[i].name == 'Pinot Gris'){pr_6[day]++};
+       };  
+
+//1st Chart for a All Store
+var chartData_All={
+  "type": "bar",
+  "title":{"text":"30 Days Performance Over 300 Stores"},
+    "legend":{  
+  },
+  "series": [
+     {"values":  [0, 0, 0, 0, 0, 0],
+       "text": "Rioja" }, 
+     { "values": [2, 5, 4, 5, 1, 2],
+        "text": "Tinto Roriz" },
+     { "values": [8, 7, 3, 6, 2, 1],
+        "text": "Chablis" },
+     { "values": [2, 3, 1, 2, 4, 3],
+        "text": "Rose" },
+     { "values": [1, 3, 5, 6, 5, 1],
+       "text": "Chardonnay" },
+     { "values": [0, 3, 2, 5, 4, 4],
+        "text": "Pinot Gris" }
+  ]
+};
+//Jerry-rigged code to be refactored
+for(i=0; i<30; i++){
+chartData_All.series[0].values[i]=pr_1[i];
+chartData_All.series[1].values[i]=pr_2[i];
+chartData_All.series[2].values[i]=pr_3[i];
+chartData_All.series[3].values[i]=pr_4[i];
+chartData_All.series[4].values[i]=pr_5[i];
+chartData_All.series[5].values[i]=pr_6[i];
+};
+     console.log('pr_1: '+pr_1);
+     console.log('pr_2: '+pr_2);
+     console.log('pr_3: '+pr_3);
+     console.log('pr_4: '+pr_4);
+     console.log('pr_5: '+pr_5);
+     console.log('pr_6: '+pr_6);
+//1st Chart Rendering Object - For a All stores monthly distribution
+//window.onload=function(){
+  zingchart.render({
+    id:'chartDiv_All',
+    height:500,
+    width:1100,
+    data:chartData_All
+  });
+//};
+
   })
     .error(function(){console.log('doesnt fucking work!')});
 }); 

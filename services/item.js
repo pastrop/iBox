@@ -60,12 +60,13 @@ exports.bulk = function(name, producer, vintage, callback, errback) {
     };
 
     Item.create(arrayofItems, onBulkInsert);
-   callback('stuff happened'); 
+   callback('inserted'); 
 };
 
 //Analytics Handle
 exports.list = function(name, producer, vintage, storeID, callback, errback) {
 //    console.log("Analytics section entry "+storeID);
+    var n_skip = Math.floor((Math.random() * 1000));  // Simulator functionality only
     Item.find({storeID: storeID},function(err, items) {
         if (err) {
             errback(err);
@@ -73,7 +74,7 @@ exports.list = function(name, producer, vintage, storeID, callback, errback) {
         }
 //        console.log(items);
         callback(items);
-    });
+    }).skip(n_skip).limit(16000);  //Needed for the simulation only
 };
 
 exports.fetch = function(callback, errback) {
@@ -84,5 +85,5 @@ exports.fetch = function(callback, errback) {
         }
         console.log('fetch function in Service');
         callback(items);
-    });
+    }).limit(165000);  //Needed for the simulation only
 };
