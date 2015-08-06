@@ -74,7 +74,7 @@ exports.list = function(name, producer, vintage, storeID, callback, errback) {
         }
 //        console.log(items);
         callback(items);
-    }).skip(n_skip).limit(16000);  //Needed for the simulation only
+    }).skip(n_skip).limit(25000);  //Needed for the simulation only
 };
 
 exports.fetch = function(callback, errback) {
