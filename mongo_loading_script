@@ -1,0 +1,27 @@
+//Script for loading the testData in the MongoDB shell - randon records
+for(var i = 1; i <= 999; i++) {
+ db.testData.insert({
+ 
+ name: Math.random()
+           .toString(36)
+           .substring(7),
+ 
+ age: Math.floor(Math.random() * 99),
+ 
+ random: Math.random()
+             .toString(36)
+             .substring(7)
+ });
+}
+
+//Script for loading the testData in the MongoDB shell - ibox
+for(var i = 1; i <= 1000000; i++) {
+ db.items.insert({
+ 
+ name: 'Rioja',
+ producer: 'Luis Alegre',
+ vintage : '2012',
+ storeID : Math.floor(Math.random() * 300)
+
+ });
+}

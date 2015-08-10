@@ -74,10 +74,11 @@ exports.list = function(name, producer, vintage, storeID, callback, errback) {
         }
 //        console.log(items);
         callback(items);
-    }).skip(n_skip).limit(25000);  //Needed for the simulation only
+    }).limit(18000);  //Needed for the simulation only
 };
 
 exports.fetch = function(callback, errback) {
+   var n_skip = Math.floor((Math.random() * 1000)); 
     Item.find(function(err, items) {
         if (err) {
             errback(err);
@@ -85,5 +86,19 @@ exports.fetch = function(callback, errback) {
         }
         console.log('fetch function in Service');
         callback(items);
-    }).limit(165000);  //Needed for the simulation only
+    }).limit(160000);  //Needed for the simulation only
+};
+
+// Paginated fetch to send a trackload of records
+exports.pagefetch = function(storeID_low, storeID_high, callback, errback) {
+    console.log("Pagefetch in services/items.js "+storeID_low+" "+storeID_high);
+//  Item.find({storeID: { $lte: 2}},
+    Item.find({storeID: {$gt: storeID_low, $lte: storeID_high}},function(err, items) {
+        if (err) {
+            errback(err);
+            return;
+        }
+//        console.log(items);
+        callback(items);
+    }).limit(100000);  //Needed for the simulation only
 };

@@ -12,7 +12,7 @@ router.post('/items_analytics', function(req, res) {
         res.status(400).json(err);
     });
 });
-//Entire datastore
+//Entire datastore less than 200,0000 entries
 router.get('/items_analytics', function(req, res) {
     Item.fetch(function(items) {
         res.json(items);
@@ -21,6 +21,17 @@ router.get('/items_analytics', function(req, res) {
         res.status(400).json(err);
     });
 });
+//Entire datastore - Paginated
+router.post('/items_analytics_page', function(req, res) {
+    console.log("/items_analytics_page in routes.js: "+ req.body.storeID_l+" "+req.body.storeID_h);
+    Item.pagefetch(req.body.storeID_l, req.body.storeID_h, function(items) {        
+        res.json(items);       
+    }, function(err) {
+        res.status(400).json(err);
+    });
+});
+
+
 
 
 //Database loading handle
@@ -40,6 +51,9 @@ router.post('/items', function(req, res) {
     });
 });
 
+
+
+/*
 //Placeholders for more request
 router.delete('/items/:id', function(req, res) {
 //    console.log("router delete endpoint "+req.params.name);
@@ -59,4 +73,5 @@ router.put('/items/:id', function(req, res) {
     });
 });
 
+*/
 module.exports = router;
